@@ -1,0 +1,15 @@
+---
+# from geerlingguy.packer-rhel
+- name: Remove RedHat interface persistence.
+  file:
+    path: /etc/udev/rules.d/70-persistent-net.rules
+    state: absent
+
+# adapted from: https://github.com/CentOS/sig-cloud-instance-build/blob/5162d86c01/vagrant/centos7.ks
+# Fix for https://github.com/CentOS/sig-cloud-instance-build/issues/38
+- name: Replace ifcfg-eth0 file (without HWADDR or UUID)
+  copy:
+    src: ifcfg-eth0
+    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
+
+#- name: ensure net.ifnames=0 and bisodevnames=0 on grub cmdline
